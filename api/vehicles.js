@@ -38,7 +38,11 @@ export default async function handler(request, response) {
   const apiKey = process.env.AUTO_RIA_API_KEY;
 
   if (!apiKey) {
-    return response.status(503).json({ error: 'AUTO_RIA_API_KEY is not configured.' });
+    response.setHeader('Cache-Control', 'no-store');
+    return response.status(200).json({
+      products: [],
+      warning: 'AUTO_RIA_API_KEY is not configured.',
+    });
   }
 
   try {
