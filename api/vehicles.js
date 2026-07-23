@@ -1,5 +1,5 @@
 const RIA_API = 'https://developers.ria.com/auto/new';
-const CATALOG_LIMIT = 12;
+const CATALOG_LIMIT = 6;
 const CACHE_TTL = 15 * 60 * 1000;
 
 let catalogCache = null;
@@ -110,6 +110,13 @@ export default async function handler(request, response) {
       return response.status(200).json({
         products: catalogCache.products,
         warning: 'Serving cached AUTO.RIA vehicles.',
+      });
+    }
+    if (!request.query.id) {
+      response.setHeader('Cache-Control', 'no-store');
+      return response.status(200).json({
+        products: [],
+        warning: error instanceof Error ? error.message : 'AUTO.RIA is temporarily unavailable.',
       });
     }
     return response.status(502).json({
