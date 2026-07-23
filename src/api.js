@@ -49,6 +49,9 @@ export async function getVehicles() {
 
 export async function getVehicle(id) {
   if (String(id).startsWith('ria-')) {
+    const savedVehicle = [...getCachedRiaVehicles(), ...riaSnapshot]
+      .find((vehicle) => String(vehicle.id) === String(id));
+    if (savedVehicle) return savedVehicle;
     return request(`/api/vehicles?id=${encodeURIComponent(id)}`);
   }
   return request(`https://dummyjson.com/products/${id}`);
