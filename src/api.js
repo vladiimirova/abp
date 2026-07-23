@@ -17,6 +17,14 @@ function cacheRiaVehicles(vehicles) {
   }
 }
 
+function mergeVehicles(...collections) {
+  const vehiclesById = new Map();
+  collections.flat().forEach((vehicle) => {
+    if (vehicle?.id) vehiclesById.set(String(vehicle.id), vehicle);
+  });
+  return [...vehiclesById.values()];
+}
+
 async function request(url) {
   const response = await fetch(url);
   if (!response.ok) {
@@ -37,19 +45,15 @@ export async function getVehicles() {
 
   const dummyVehicles = dummyResult.status === 'fulfilled' ? dummyResult.value.products : [];
   const freshRiaVehicles = riaResult.status === 'fulfilled' ? riaResult.value.products : [];
-  if (freshRiaVehicles.length) cacheRiaVehicles(freshRiaVehicles);
   const cachedRiaVehicles = getCachedRiaVehicles();
-  const riaVehicles = freshRiaVehicles.length
-    ? freshRiaVehicles
-    : cachedRiaVehicles.length
-      ? cachedRiaVehicles
-      : riaSnapshot;
+  const riaVehicles = mergeVehicles(riaSnapshot, cachedRiaVehicles, freshRiaVehicles);
+  cacheRiaVehicles(riaVehicles);
   return [...dummyVehicles, ...riaVehicles];
 }
 
 export async function getVehicle(id) {
   if (String(id).startsWith('ria-')) {
-    const savedVehicle = [...getCachedRiaVehicles(), ...riaSnapshot]
+    const savedVehicle = mergeVehicles(riaSnapshot, getCachedRiaVehicles())
       .find((vehicle) => String(vehicle.id) === String(id));
     if (savedVehicle) return savedVehicle;
     return request(`/api/vehicles?id=${encodeURIComponent(id)}`);
