@@ -25,8 +25,9 @@ export default function ThemeToggle() {
       title={isDark ? 'Light mode' : 'Dark mode'}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
     >
-      <span aria-hidden="true">{isDark ? '☀' : '☾'}</span>
-      <span className="theme-label">{isDark ? 'Day' : 'Night'}</span>
+      <span className="theme-icon theme-sun" aria-hidden="true">☀</span>
+      <span className="theme-icon theme-moon" aria-hidden="true">☾</span>
+      <span className="theme-thumb" aria-hidden="true" />
     </button>
   );
 }

@@ -10,14 +10,22 @@ export default function Layout({ children }) {
           <span>Northline</span>
         </Link>
         <nav aria-label="Main navigation">
-          <a href="mailto:hello@northline.example">Contact</a>
+          <a href="#contacts">Contact</a>
           <ThemeToggle />
         </nav>
       </header>
       <main>{children}</main>
-      <footer>
-        <div><strong>Northline</strong><span>Cars worth the drive.</span></div>
-        <span>© {new Date().getFullYear()} Northline Showroom</span>
+      <footer id="contacts">
+        <div className="footer-brand">
+          <strong>Northline</strong>
+          <span>Cars worth the drive.</span>
+        </div>
+        <address>
+          <a href="tel:+380441234567">+380 44 123 45 67</a>
+          <a href="mailto:sales@northline.com">sales@northline.com</a>
+          <span>Kyiv, 12 Peremohy Avenue</span>
+        </address>
+        <span className="copyright">© {new Date().getFullYear()} Northline Showroom</span>
       </footer>
     </div>
   );
