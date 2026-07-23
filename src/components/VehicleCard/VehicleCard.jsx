@@ -4,7 +4,7 @@ import { formatPrice } from '../../utils';
 export default function VehicleCard({ vehicle }) {
   return (
     <article className="vehicle-card">
-      <Link className={`card-image ${String(vehicle.id).startsWith('local-') ? 'photo-card' : ''}`} to={`/vehicles/${vehicle.id}`} aria-label={`View ${vehicle.title}`}>
+      <Link className="card-image" to={`/vehicles/${vehicle.id}`} aria-label={`View ${vehicle.title}`}>
         <img src={vehicle.thumbnail} alt={vehicle.title} loading="lazy" />
         <span>{vehicle.availabilityStatus || 'In stock'}</span>
       </Link>
