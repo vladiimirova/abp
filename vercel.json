@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/vehicles/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
