@@ -12,9 +12,8 @@ img { display: block; max-width: 100%; }
 .site-header { height: 84px; display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(24px, 5vw, 76px); border-bottom: 1px solid var(--line); background: var(--surface); }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 19px; letter-spacing: -.03em; }
 .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; color: var(--cream); background: var(--green); font-family: 'Playfair Display', serif; font-style: italic; border-radius: 50% 50% 50% 10%; }
-nav { display: flex; align-items: center; gap: 24px; }
-nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
-nav a:hover, .back-link:hover { color: var(--orange); }
+.header-actions { display: flex; align-items: center; }
+.back-link:hover { color: var(--orange); }
 .theme-toggle { position: relative; width: 68px; height: 34px; display: inline-flex; align-items: center; justify-content: space-between; padding: 0 9px; color: #f0b566; background: #e3e0d7; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; overflow: hidden; transition: background .25s ease, border-color .25s ease; }
 .theme-toggle:hover { border-color: var(--orange); }
 .theme-toggle:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
@@ -123,8 +122,6 @@ footer address a:hover { color: #e18158; }
 }
 @media (max-width: 560px) {
   .site-header { height: 70px; }
-  nav { gap: 10px; }
-  nav a { display: none; }
   .theme-toggle { width: 62px; height: 32px; padding-inline: 8px; }
   .theme-thumb { width: 24px; height: 24px; }
   :root[data-theme='dark'] .theme-thumb { transform: translateX(30px); }

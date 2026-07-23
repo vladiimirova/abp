@@ -9,10 +9,9 @@ export default function Layout({ children }) {
           <span className="brand-mark">N</span>
           <span>Northline</span>
         </Link>
-        <nav aria-label="Main navigation">
-          <a href="#contacts">Contact</a>
+        <div className="header-actions">
           <ThemeToggle />
-        </nav>
+        </div>
       </header>
       <main>{children}</main>
       <footer id="contacts">
