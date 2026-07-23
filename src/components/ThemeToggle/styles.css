@@ -1,0 +1,14 @@
+.theme-toggle { position: relative; width: 68px; height: 34px; display: inline-flex; align-items: center; justify-content: space-between; padding: 0 9px; color: #f0b566; background: #e3e0d7; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; overflow: hidden; transition: background .25s ease, border-color .25s ease; }
+.theme-toggle:hover { border-color: var(--orange); }
+.theme-toggle:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.theme-icon { position: relative; z-index: 1; font-size: 15px; line-height: 1; }
+.theme-moon { color: #75809e; }
+.theme-thumb { position: absolute; z-index: 0; left: 3px; width: 26px; height: 26px; background: #fffdf7; border-radius: 50%; box-shadow: 0 2px 8px rgba(20, 28, 23, .22); transition: transform .25s ease, background .25s ease; }
+:root[data-theme='dark'] .theme-toggle { background: #28332d; }
+:root[data-theme='dark'] .theme-thumb { background: #111713; transform: translateX(34px); }
+
+@media (max-width: 560px) {
+  .theme-toggle { width: 62px; height: 32px; padding-inline: 8px; }
+  .theme-thumb { width: 24px; height: 24px; }
+  :root[data-theme='dark'] .theme-thumb { transform: translateX(30px); }
+}

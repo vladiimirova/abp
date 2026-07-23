@@ -1,0 +1,21 @@
+.site-shell { min-height: 100vh; display: flex; flex-direction: column; }
+.site-header { height: 84px; display: flex; justify-content: space-between; align-items: center; padding: 0 clamp(24px, 5vw, 76px); border-bottom: 1px solid var(--line); background: var(--surface); }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 19px; letter-spacing: -.03em; }
+.brand-mark { display: grid; place-items: center; width: 34px; height: 34px; color: var(--cream); background: var(--green); font-family: 'Playfair Display', serif; font-style: italic; border-radius: 50% 50% 50% 10%; }
+.header-actions { display: flex; align-items: center; }
+main { flex: 1; }
+footer { min-height: 175px; padding: 38px clamp(24px, 5vw, 76px); display: grid; grid-template-columns: 1fr auto; align-items: center; gap: clamp(30px, 6vw, 90px); background: #18251f; color: #aeb8b1; font-size: 11px; }
+.footer-brand { display: flex; flex-direction: column; gap: 5px; }
+footer strong { color: white; font: 600 22px 'Playfair Display', serif; }
+.footer-right { display: grid; grid-template-columns: auto auto; align-items: end; gap: clamp(35px, 6vw, 90px); }
+footer address { display: grid; gap: 7px; color: #d8ddd8; font-style: normal; line-height: 1.4; }
+footer address a { width: fit-content; text-decoration: none; }
+footer address a:hover { color: #e18158; }
+.copyright { text-align: right; }
+
+@media (max-width: 560px) {
+  .site-header { height: 70px; }
+  footer { grid-template-columns: 1fr; align-items: start; gap: 25px; }
+  .footer-right { grid-template-columns: 1fr; gap: 22px; }
+  .copyright { text-align: left; }
+}
