@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getVehicle } from '../../api';
-import ReviewForm from '../../components/ReviewForm';
+import ReviewForm from '../../components/ReviewForm/ReviewForm';
 import useFetch from '../../hooks/useFetch';
 import { formatPrice, getSavedReviews, saveReviews } from '../../utils';
 

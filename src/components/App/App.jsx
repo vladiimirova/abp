@@ -1,7 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom';
-import Layout from '../Layout';
-import CatalogPage from '../../pages/CatalogPage';
-import VehiclePage from '../../pages/VehiclePage';
+import Layout from '../Layout/Layout';
+import CatalogPage from '../../pages/CatalogPage/CatalogPage';
+import VehiclePage from '../../pages/VehiclePage/VehiclePage';
 
 export default function App() {
   return (

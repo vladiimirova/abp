@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { getVehicles } from '../../api';
-import VehicleCard from '../../components/VehicleCard';
+import VehicleCard from '../../components/VehicleCard/VehicleCard';
 import useFetch from '../../hooks/useFetch';
 
 export default function CatalogPage() {

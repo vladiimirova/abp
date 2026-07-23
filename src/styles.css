@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
-@import './components/App/styles.css';
-@import './components/Layout/styles.css';
-@import './components/ThemeToggle/styles.css';
-@import './components/VehicleCard/styles.css';
-@import './components/ReviewForm/styles.css';
-@import './pages/CatalogPage/styles.css';
-@import './pages/VehiclePage/styles.css';
+@import './components/App/App.css';
+@import './components/Layout/Layout.css';
+@import './components/ThemeToggle/ThemeToggle.css';
+@import './components/VehicleCard/VehicleCard.css';
+@import './components/ReviewForm/ReviewForm.css';
+@import './pages/CatalogPage/CatalogPage.css';
+@import './pages/VehiclePage/VehiclePage.css';
 
 :root { font-family: 'DM Sans', Arial, sans-serif; color: #1d211d; background: #f3f1eb; font-synthesis: none; color-scheme: light; --ink: #1d211d; --green: #263c31; --cream: #f3f1eb; --surface: #f3f1eb; --field: #faf9f5; --image: #e5e2d9; --reviews: #e9e6de; --muted: #686d67; --line: #d6d3ca; --orange: #c75a2c; }
 :root[data-theme='dark'] { color-scheme: dark; --ink: #eef1ec; --green: #18251f; --cream: #f3f1eb; --surface: #111713; --field: #1b241f; --image: #222c26; --reviews: #18211c; --muted: #aeb7b0; --line: #354139; --orange: #e18158; }
