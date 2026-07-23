@@ -1,4 +1,19 @@
 const API_URL = 'https://dummyjson.com/products/category/vehicle';
+const RIA_CACHE_KEY = 'northline-ria-vehicles';
+
+function getCachedRiaVehicles() {
+  try {
+    return JSON.parse(localStorage.getItem(RIA_CACHE_KEY)) || [];
+  } catch {
+    return [];
+  }
+}
+
+function cacheRiaVehicles(vehicles) {
+  if (vehicles.length) {
+    localStorage.setItem(RIA_CACHE_KEY, JSON.stringify(vehicles));
+  }
+}
 
 async function request(url) {
   const response = await fetch(url);
@@ -19,7 +34,9 @@ export async function getVehicles() {
   }
 
   const dummyVehicles = dummyResult.status === 'fulfilled' ? dummyResult.value.products : [];
-  const riaVehicles = riaResult.status === 'fulfilled' ? riaResult.value.products : [];
+  const freshRiaVehicles = riaResult.status === 'fulfilled' ? riaResult.value.products : [];
+  if (freshRiaVehicles.length) cacheRiaVehicles(freshRiaVehicles);
+  const riaVehicles = freshRiaVehicles.length ? freshRiaVehicles : getCachedRiaVehicles();
   return [...dummyVehicles, ...riaVehicles];
 }
 

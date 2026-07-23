@@ -1,5 +1,9 @@
 const RIA_API = 'https://developers.ria.com/auto/new';
 const CATALOG_LIMIT = 12;
+const CACHE_TTL = 15 * 60 * 1000;
+
+let catalogCache = null;
+let catalogRequest = null;
 
 async function getJson(url) {
   const response = await fetch(url);
@@ -40,6 +44,37 @@ function normalizeVehicle(vehicle) {
   };
 }
 
+async function loadCatalog(apiKey) {
+  if (catalogCache && catalogCache.expiresAt > Date.now()) {
+    return catalogCache.products;
+  }
+  if (catalogRequest) return catalogRequest;
+
+  catalogRequest = (async () => {
+    const search = await getJson(
+      `${RIA_API}/search?api_key=${encodeURIComponent(apiKey)}&categoryId=1&page=1&limit=${CATALOG_LIMIT}`,
+    );
+    const ids = (search.ids || search.autos || []).slice(0, CATALOG_LIMIT);
+    const vehicles = await Promise.allSettled(
+      ids.map((id) => getJson(`${RIA_API}/auto/${id}?api_key=${encodeURIComponent(apiKey)}`)),
+    );
+    const products = vehicles
+      .filter(({ status }) => status === 'fulfilled')
+      .map(({ value }) => normalizeVehicle(value));
+
+    if (products.length) {
+      catalogCache = { products, expiresAt: Date.now() + CACHE_TTL };
+    }
+    return products;
+  })();
+
+  try {
+    return await catalogRequest;
+  } finally {
+    catalogRequest = null;
+  }
+}
+
 export default async function handler(request, response) {
   const apiKey = process.env.AUTO_RIA_API_KEY;
 
@@ -66,20 +101,17 @@ export default async function handler(request, response) {
       return response.status(200).json(normalizeVehicle(vehicle));
     }
 
-    const search = await getJson(
-      `${RIA_API}/search?api_key=${encodeURIComponent(apiKey)}&categoryId=1&page=1&limit=${CATALOG_LIMIT}`,
-    );
-    const ids = (search.ids || search.autos || []).slice(0, CATALOG_LIMIT);
-    const vehicles = await Promise.allSettled(
-      ids.map((id) => getJson(`${RIA_API}/auto/${id}?api_key=${encodeURIComponent(apiKey)}`)),
-    );
-    const normalized = vehicles
-      .filter(({ status }) => status === 'fulfilled')
-      .map(({ value }) => normalizeVehicle(value));
+    const normalized = await loadCatalog(apiKey);
 
     response.setHeader('Cache-Control', 's-maxage=900, stale-while-revalidate=3600');
     return response.status(200).json({ products: normalized });
   } catch (error) {
+    if (catalogCache?.products?.length && !request.query.id) {
+      return response.status(200).json({
+        products: catalogCache.products,
+        warning: 'Serving cached AUTO.RIA vehicles.',
+      });
+    }
     return response.status(502).json({
       error: 'Could not load AUTO.RIA vehicles.',
       detail: error instanceof Error ? error.message : 'Unknown error',
