@@ -27,8 +27,15 @@ export default function VehiclePage() {
         <div className="vehicle-gallery"><div className="main-image"><img src={vehicle.images[0] || vehicle.thumbnail} alt={vehicle.title} /></div>{vehicle.images.length > 1 && <div className="image-strip">{vehicle.images.slice(1, 4).map((image, index) => <img key={image} src={image} alt={`${vehicle.title} view ${index + 2}`} />)}</div>}</div>
         <div className="vehicle-summary">
           <p className="eyebrow">{vehicle.brand} · {vehicle.availabilityStatus}</p><h1>{vehicle.title}</h1><p className="price">{formatPrice(vehicle.price)}</p><p className="lead">{vehicle.description}</p>
-          <dl><div><dt>Rating</dt><dd>★ {vehicle.rating} / 5</dd></div><div><dt>Availability</dt><dd>{vehicle.stock} in stock</dd></div><div><dt>Warranty</dt><dd>{vehicle.warrantyInformation}</dd></div><div><dt>Delivery</dt><dd>{vehicle.shippingInformation}</dd></div></dl>
-          <a className="button wide" href={`mailto:sales@northline.example?subject=${encodeURIComponent(`Enquiry about ${vehicle.title}`)}`}>Enquire about this car</a>
+          <dl>
+            <div><dt>Rating</dt><dd>{vehicle.rating ? `★ ${vehicle.rating} / 5` : 'Not rated yet'}</dd></div>
+            <div><dt>Availability</dt><dd>{vehicle.availabilityStatus}</dd></div>
+            <div><dt>Warranty</dt><dd>{vehicle.warrantyInformation}</dd></div>
+            <div><dt>Delivery</dt><dd>{vehicle.shippingInformation}</dd></div>
+          </dl>
+          {vehicle.externalUrl
+            ? <a className="button wide" href={vehicle.externalUrl} target="_blank" rel="noreferrer">View listing on AUTO.RIA</a>
+            : <a className="button wide" href={`mailto:sales@northline.example?subject=${encodeURIComponent(`Enquiry about ${vehicle.title}`)}`}>Enquire about this car</a>}
         </div>
       </section>
       <section className="reviews-section" aria-labelledby="reviews-heading">

@@ -9,10 +9,23 @@ async function request(url) {
 }
 
 export async function getVehicles() {
-  const data = await request(`${API_URL}?limit=100`);
-  return data.products;
+  const [dummyResult, riaResult] = await Promise.allSettled([
+    request(`${API_URL}?limit=100`),
+    request('/api/vehicles'),
+  ]);
+
+  if (dummyResult.status === 'rejected' && riaResult.status === 'rejected') {
+    throw new Error('The showroom is temporarily unavailable. Please try again.');
+  }
+
+  const dummyVehicles = dummyResult.status === 'fulfilled' ? dummyResult.value.products : [];
+  const riaVehicles = riaResult.status === 'fulfilled' ? riaResult.value.products : [];
+  return [...dummyVehicles, ...riaVehicles];
 }
 
 export async function getVehicle(id) {
+  if (String(id).startsWith('ria-')) {
+    return request(`/api/vehicles?id=${encodeURIComponent(id)}`);
+  }
   return request(`https://dummyjson.com/products/${id}`);
 }

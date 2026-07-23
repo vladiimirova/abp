@@ -25,6 +25,7 @@ export default function Layout({ children }) {
             <a href="tel:+380441234567">+380 44 123 45 67</a>
             <a href="mailto:sales@northline.com">sales@northline.com</a>
             <span>Kyiv, 12 Peremohy Avenue</span>
+            <a href="https://auto.ria.com/" target="_blank" rel="noreferrer">Vehicle data by AUTO.RIA</a>
           </address>
           <span className="copyright">© {new Date().getFullYear()} Northline Showroom</span>
         </div>

@@ -34,11 +34,12 @@ export default function CatalogPage() {
   const filtered = useMemo(() => {
     const result = (vehicles || []).filter((vehicle) => {
       const searchable = `${vehicle.title} ${vehicle.brand} ${vehicle.description}`.toLowerCase();
-      return searchable.includes(query.trim().toLowerCase()) && vehicle.rating >= Number(rating);
+      const matchesRating = Number(rating) === 0 || Number(vehicle.rating) >= Number(rating);
+      return searchable.includes(query.trim().toLowerCase()) && matchesRating;
     });
     if (sort === 'price-low') result.sort((a, b) => a.price - b.price);
     if (sort === 'price-high') result.sort((a, b) => b.price - a.price);
-    if (sort === 'rating') result.sort((a, b) => b.rating - a.rating);
+    if (sort === 'rating') result.sort((a, b) => Number(b.rating) - Number(a.rating));
     return result;
   }, [vehicles, query, sort, rating]);
 

@@ -14,7 +14,9 @@ export default function VehicleCard({ vehicle }) {
           <strong>{formatPrice(vehicle.price)}</strong>
         </div>
         <div className="card-meta">
-          <span aria-label={`${vehicle.rating} out of 5 stars`}>★ {vehicle.rating}</span>
+          {vehicle.rating
+            ? <span aria-label={`${vehicle.rating} out of 5 stars`}>★ {vehicle.rating}</span>
+            : <span>New listing</span>}
           <span>{vehicle.warrantyInformation || 'Warranty included'}</span>
         </div>
         <Link className="text-link" to={`/vehicles/${vehicle.id}`}>View details <span aria-hidden="true">↗</span></Link>
