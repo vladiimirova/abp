@@ -20,12 +20,14 @@ export default function Layout({ children }) {
           <strong>Northline</strong>
           <span>Cars worth the drive.</span>
         </div>
-        <address>
-          <a href="tel:+380441234567">+380 44 123 45 67</a>
-          <a href="mailto:sales@northline.com">sales@northline.com</a>
-          <span>Kyiv, 12 Peremohy Avenue</span>
-        </address>
-        <span className="copyright">© {new Date().getFullYear()} Northline Showroom</span>
+        <div className="footer-right">
+          <address>
+            <a href="tel:+380441234567">+380 44 123 45 67</a>
+            <a href="mailto:sales@northline.com">sales@northline.com</a>
+            <span>Kyiv, 12 Peremohy Avenue</span>
+          </address>
+          <span className="copyright">© {new Date().getFullYear()} Northline Showroom</span>
+        </div>
       </footer>
     </div>
   );
