@@ -63,7 +63,7 @@ export default async function handler(request, response) {
     const search = await getJson(
       `${RIA_API}/search?api_key=${encodeURIComponent(apiKey)}&categoryId=1&page=1&limit=${CATALOG_LIMIT}`,
     );
-    const ids = (search.autos || []).slice(0, CATALOG_LIMIT);
+    const ids = (search.ids || search.autos || []).slice(0, CATALOG_LIMIT);
     const vehicles = await Promise.allSettled(
       ids.map((id) => getJson(`${RIA_API}/auto/${id}?api_key=${encodeURIComponent(apiKey)}`)),
     );
