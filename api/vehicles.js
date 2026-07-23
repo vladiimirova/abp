@@ -8,7 +8,13 @@ async function getJson(url) {
 }
 
 function normalizeVehicle(vehicle) {
-  const photos = Array.isArray(vehicle.photos) ? vehicle.photos : [];
+  const photos = Array.isArray(vehicle.photos)
+    ? vehicle.photos.map((photo) =>
+        /\.(?:avif|jpe?g|png|webp)(?:\?.*)?$/i.test(photo)
+          ? photo
+          : `${photo}-620x415x70.webp`,
+      )
+    : [];
   const title = [vehicle.marka, vehicle.model, vehicle.year].filter(Boolean).join(' ');
 
   return {
