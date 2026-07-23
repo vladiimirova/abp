@@ -5,7 +5,7 @@ const projectRoot = resolve(import.meta.dirname, '..');
 const envPath = resolve(projectRoot, '.env.local');
 const outputPath = resolve(projectRoot, 'src/data/riaVehicles.json');
 const apiRoot = 'https://developers.ria.com/auto/new';
-const limit = 6;
+const limit = 12;
 
 function readApiKey(source) {
   const line = source
@@ -65,13 +65,29 @@ const search = await getJson(
   `${apiRoot}/search?api_key=${encodeURIComponent(apiKey)}&categoryId=1&page=1&limit=${limit}`,
 );
 const ids = (search.ids || search.autos || []).slice(0, limit);
+let savedVehicles = [];
+
+try {
+  savedVehicles = JSON.parse(await readFile(outputPath, 'utf8'));
+} catch {
+  savedVehicles = [];
+}
+
+const savedById = new Map(
+  savedVehicles.map((vehicle) => [String(vehicle.id).replace(/^ria-/, ''), vehicle]),
+);
 const vehicles = [];
 
 for (const id of ids) {
-  const vehicle = await getJson(
-    `${apiRoot}/auto/${id}?api_key=${encodeURIComponent(apiKey)}`,
-  );
-  vehicles.push(normalizeVehicle(vehicle));
+  const savedVehicle = savedById.get(String(id));
+  if (savedVehicle) {
+    vehicles.push(savedVehicle);
+  } else {
+    const vehicle = await getJson(
+      `${apiRoot}/auto/${id}?api_key=${encodeURIComponent(apiKey)}`,
+    );
+    vehicles.push(normalizeVehicle(vehicle));
+  }
 }
 
 await writeFile(outputPath, `${JSON.stringify(vehicles, null, 2)}\n`, 'utf8');
