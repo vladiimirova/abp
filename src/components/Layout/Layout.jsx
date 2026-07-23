@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../ThemeToggle';
 
 export default function Layout({ children }) {
   return (
@@ -9,8 +10,8 @@ export default function Layout({ children }) {
           <span>Northline</span>
         </Link>
         <nav aria-label="Main navigation">
-          <Link to="/">Inventory</Link>
           <a href="mailto:hello@northline.example">Contact</a>
+          <ThemeToggle />
         </nav>
       </header>
       <main>{children}</main>
